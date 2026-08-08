@@ -10,7 +10,6 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Selah">
   
-  <!-- Tailwind CSS & Configuration for Dark Mode -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -26,11 +25,9 @@
       }
     }
   </script>
-
-  <!-- html2pdf.js CDN for 2-Column Printable PDF Generation -->
+  
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- Google Fonts (Enhanced with more options) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -39,11 +36,9 @@
     body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
     .serif-font { font-family: 'Playfair Display', serif; }
     
-    /* Hide views that are not active */
     .view-section { display: none; animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
     .view-section.active { display: block; }
 
-    /* Floating Menu Styling */
     #action-menu {
       position: absolute;
       z-index: 100;
@@ -57,14 +52,12 @@
     .dark .highlight-blue { background-color: rgba(30, 58, 138, 0.4); }
     
     @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-    
-    /* Scrollbar Aesthetics */
+
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: #e7e5e4; border-radius: 999px; }
     .dark ::-webkit-scrollbar-thumb { background: #2e2a24; }
 
-    /* Restore styling for Bible Chapter Titles & Headings */
     #verses-body .heading, 
     #verses-body .title, 
     #verses-body .s, 
@@ -81,7 +74,6 @@
       line-height: 1.25 !important;
     }
 
-    /* Formatting */
     #verses-body .p, 
     #verses-body .m,
     #verses-body br {
@@ -93,12 +85,10 @@
       font-style: italic !important;
     }
 
-    /* Touch Action for Stylus/Drawing Canvas */
     #drawing-canvas {
       touch-action: none;
     }
 
-    /* Custom Dropdown Arrow for Selects */
     .custom-select {
       background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%23a8a29e%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
       background-position: right 0.5rem center;
@@ -108,23 +98,19 @@
 </head>
 <body class="bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 transition-colors duration-500 min-h-screen flex flex-col selection:bg-amber-100 dark:selection:bg-amber-900/30 relative overflow-x-hidden">
 
-  <!-- Minimal Ambient Background Orbs -->
   <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] pointer-events-none opacity-45 dark:opacity-20 z-0">
     <div class="absolute top-[-10%] left-[10%] w-[350px] h-[350px] rounded-full bg-amber-200/40 dark:bg-amber-900/10 blur-[100px]"></div>
     <div class="absolute top-[5%] right-[10%] w-[280px] h-[280px] rounded-full bg-stone-200/60 dark:bg-stone-800/20 blur-[80px]"></div>
   </div>
 
-  <!-- MAIN APP CONTAINER -->
   <main class="flex-grow max-w-5xl w-full mx-auto pb-24 relative z-10">
 
-    <!-- 1. HOME VIEW -->
     <section id="view-home" class="view-section active max-w-2xl mx-auto px-6 py-10">
       <header class="mb-10">
         <h1 id="greeting-text" class="text-3xl font-extrabold tracking-tight serif-font">Good morning.</h1>
         <p class="text-stone-500 dark:text-stone-400 text-xs font-semibold uppercase tracking-widest mt-2" id="current-date">Today</p>
       </header>
-      
-      <!-- Daily Verse Card -->
+
       <div class="bg-white/80 dark:bg-stone-900/60 backdrop-blur-lg border border-stone-200/60 dark:border-stone-800/60 rounded-3xl p-8 shadow-[0_10px_30px_rgba(0,0,0,0.03)] dark:shadow-none mb-8 relative overflow-hidden group">
         <div class="absolute top-0 left-0 w-1 h-full bg-amber-700 dark:bg-amber-600"></div>
         <div class="flex justify-between items-center mb-5">
@@ -137,17 +123,16 @@
       </div>
     </section>
 
-    <!-- 2. BIBLE VIEW -->
     <section id="view-bible" class="view-section px-5 py-4 relative">
-      <!-- Sticky Bible Nav -->
+
       <div class="sticky top-0 z-20 bg-stone-50/95 dark:bg-stone-950/95 backdrop-blur-md border-b border-stone-200/50 dark:border-stone-900/50 pb-3 mb-6 flex flex-wrap gap-2 justify-between items-center -mx-5 px-5">
         <div class="flex gap-2">
-          <!-- Enhanced Selects -->
+
           <select id="book-select" class="custom-select appearance-none bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl px-4 py-2 pr-8 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:shadow hover:border-stone-300 dark:hover:border-stone-700 transition-all cursor-pointer"></select>
           <select id="chapter-select" class="custom-select appearance-none bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl px-4 py-2 pr-8 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:shadow hover:border-stone-300 dark:hover:border-stone-700 transition-all cursor-pointer"></select>
         </div>
         <div class="flex gap-1.5 items-center">
-          <!-- Enhanced Version Select -->
+
           <select id="version-select" class="custom-select appearance-none bg-amber-50/80 dark:bg-amber-950/40 text-amber-900 dark:text-amber-400 border border-amber-200/80 dark:border-amber-900/40 rounded-xl px-3 py-2 pr-7 text-[10px] font-extrabold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all cursor-pointer">
             <option value="ASV">ASV</option>
             <option value="ESV">ESV</option>
@@ -156,7 +141,7 @@
             <option value="NIV">NIV</option>
             <option value="NLT">NLT</option>
           </select>
-          <!-- Enhanced Buttons -->
+
           <button id="btn-search-toggle" title="Search Bible" class="p-2 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:text-amber-800 dark:hover:text-amber-500 hover:border-stone-300 dark:hover:border-stone-700 active:translate-y-0 transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </button>
@@ -164,7 +149,6 @@
             Aa
           </button>
 
-          <!-- Generate 2-Column Printable PDF Button -->
           <button id="btn-export-pdf" title="Export 2-Column Journal PDF" class="p-2 px-2.5 bg-amber-800 dark:bg-amber-600 text-white rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-amber-900 dark:hover:bg-amber-500 active:translate-y-0 transition-all flex items-center gap-1">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             <span class="text-[10px]">PDF</span>
@@ -172,7 +156,6 @@
         </div>
       </div>
 
-      <!-- Advanced Search Panel -->
       <div id="search-panel" class="hidden bg-white/90 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200 dark:border-stone-800/80 rounded-2xl p-4 mb-6 shadow-lg animate-[fadeIn_0.2s_ease]">
         <label class="text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-2 block">Lookup Reference or Search Keyword</label>
         <div class="flex gap-2">
@@ -181,14 +164,12 @@
         </div>
         <p id="search-error" class="text-xs text-red-500 mt-2 hidden"></p>
 
-        <!-- Dynamic Scripture Results Container -->
         <div id="search-results-box" class="hidden mt-4 pt-4 border-t border-stone-100 dark:border-stone-800">
           <h4 class="text-[10px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-wider mb-2">Search Results</h4>
           <div id="search-results-list" class="space-y-2 max-h-60 overflow-y-auto pr-1"></div>
         </div>
       </div>
 
-      <!-- Typography Settings Panel -->
       <div id="typography-panel" class="hidden bg-white/90 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200 dark:border-stone-800/80 rounded-2xl p-4 mb-6 shadow-lg animate-[fadeIn_0.2s_ease]">
         <div class="flex justify-between items-center mb-4">
           <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Text Size</span>
@@ -200,7 +181,7 @@
         <div>
           <span class="text-xs font-bold uppercase tracking-wider text-stone-400 block mb-2">Font Style</span>
           <div class="flex flex-wrap gap-2">
-            <!-- Added 3 new fonts -->
+
             <button id="btn-font-serif" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl font-serif text-xs font-bold border-2 border-transparent transition-all">Playfair</button>
             <button id="btn-font-sans" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl font-sans text-xs font-bold border-2 border-transparent transition-all">Jakarta</button>
             <button id="btn-font-lora" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl text-xs font-bold border-2 border-transparent transition-all" style="font-family: 'Lora', serif;">Lora</button>
@@ -210,7 +191,6 @@
         </div>
       </div>
 
-      <!-- Floating Action Menu -->
       <div id="action-menu" class="hidden bg-stone-900 dark:bg-white text-white dark:text-stone-900 rounded-xl shadow-xl p-2.5 flex items-center gap-2 border border-stone-800/10 dark:border-stone-200/10">
         <button onclick="handleAction('copy')" class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider hover:opacity-70 transition-opacity">Copy</button>
         <div class="w-px h-4 bg-stone-700 dark:bg-stone-200"></div>
@@ -224,11 +204,9 @@
         <button onclick="handleAction('clear')" class="w-6 h-6 rounded-full bg-stone-500 hover:scale-110 transition-transform flex items-center justify-center text-white text-[9px] font-bold">×</button>
       </div>
 
-      <!-- Floating Pen Tools -->
       <div class="fixed bottom-24 right-5 z-40 flex flex-col items-end gap-3 pointer-events-auto">
         <div id="pen-settings" class="hidden bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl shadow-xl p-4 flex-col items-center gap-4 transition-all w-[210px]">
-          
-          <!-- Drawing Tools -->
+
           <div class="flex w-full gap-1 border-b border-stone-100 dark:border-stone-800 pb-3">
             <button onclick="setDrawingTool('pen', this)" class="tool-btn flex-1 text-[10px] font-bold py-1.5 rounded-lg bg-stone-200 dark:bg-stone-700 text-amber-900 dark:text-amber-400 transition-colors">Pen</button>
             <button onclick="setDrawingTool('highlighter', this)" class="tool-btn flex-1 text-[10px] font-bold py-1.5 rounded-lg hover:bg-stone-100 dark:hover:bg-stone-800 transition-colors">Highlight</button>
@@ -237,8 +215,7 @@
 
           <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center w-full mt-1">Thickness & Color</label>
           <input type="range" id="pen-thickness" min="1" max="15" value="3" class="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer">
-          
-          <!-- Expanded Colors -->
+
           <div class="flex flex-wrap justify-center gap-2 mt-2">
             <button onclick="changePenColor('rgba(253, 224, 71, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-yellow-300 ring-2 ring-offset-2 ring-amber-500 transition-all"></button>
             <button onclick="changePenColor('rgba(248, 113, 113, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-red-400 hover:scale-110 transition-all"></button>
@@ -260,7 +237,6 @@
         </button>
       </div>
 
-      <!-- Reader Content Area (2-COLUMN SPLIT LAYOUT MATCHING PDF DOWNLOAD) -->
       <div class="relative min-h-[50vh]">
         <div id="bible-loader" class="absolute inset-0 flex items-center justify-center bg-stone-50/90 dark:bg-stone-950/90 z-30 transition-all opacity-0 pointer-events-none">
           <div class="animate-spin rounded-full h-8 w-8 border-2 border-stone-300 border-t-amber-800"></div>
@@ -269,25 +245,20 @@
         <div id="reader-content" class="transition-opacity duration-300 relative z-10">
           <h1 id="chapter-title" class="text-3xl sm:text-4xl font-semibold tracking-tight text-center mb-6 font-serif"></h1>
 
-          <!-- Split 2-Column Container: Left Scripture | Right Blank Note/Drawing Area -->
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch relative" id="split-container">
-            
-            <!-- Apple Pencil / Stylus Interactive Canvas Overlay (covers both columns) -->
+
             <canvas id="drawing-canvas" class="absolute inset-0 z-20 pointer-events-none w-full h-full"></canvas>
 
-            <!-- LEFT COLUMN: Scripture Verses -->
             <div id="left-bible-col" class="flex flex-col justify-between pr-0 sm:pr-2 relative z-10">
               <div id="verses-body" class="text-lg text-stone-850 dark:text-stone-200 text-justify tracking-wide leading-[1.85] pb-6 transition-all duration-300">
                 <!-- Verses injected here -->
               </div>
             </div>
 
-            <!-- RIGHT COLUMN: Blank Note / Drawing Canvas Area (Height automatically matches left column) -->
             <div id="right-notes-col" class="relative min-h-[350px] sm:min-h-full rounded-2xl border border-stone-200/80 dark:border-stone-800/80 bg-white/50 dark:bg-stone-900/40 backdrop-blur-sm overflow-hidden flex flex-col shadow-inner group transition-all z-10">
-              <!-- Ruled lines background pattern -->
+
               <div class="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 27px, #a8a29e 28px);"></div>
-              
-              <!-- Text notes overlay for optional typing -->
+
               <textarea id="chapter-text-note" placeholder="Tap or write notes here..." class="w-full h-full p-4 bg-transparent resize-none focus:outline-none text-sm text-stone-800 dark:text-stone-200 relative z-10 font-sans leading-[28px] selection:bg-amber-100 dark:selection:bg-amber-900/40"></textarea>
             </div>
 
@@ -301,7 +272,6 @@
       </div>
     </section>
 
-    <!-- 3. READING PLANS VIEW -->
     <section id="view-plans" class="view-section max-w-2xl mx-auto px-5 py-8">
       <h1 class="text-3xl font-bold tracking-tight serif-font mb-2">Reading Plans</h1>
       <p class="text-xs text-stone-400 dark:text-stone-500 uppercase tracking-widest font-semibold mb-8">Track your journey through the scriptures.</p>
@@ -338,7 +308,6 @@
        </div>
       </div>
 
-      <!-- Plan Detail View -->
       <div id="plan-detail" class="hidden">
         <button onclick="closePlan()" class="text-xs font-extrabold tracking-widest uppercase text-amber-800 dark:text-amber-500 mb-6 flex items-center gap-1.5 hover:opacity-80 transition-opacity">
           ← Back to Plans
@@ -351,7 +320,6 @@
       </div>
     </section>
     
-    <!-- 4. DEVOTION VIEW -->
     <section id="view-devotion" class="view-section max-w-2xl mx-auto px-5 py-8">
       <header class="mb-8 flex justify-between items-center">
         <div>
@@ -371,7 +339,6 @@
         <p class="text-xs mt-1 text-stone-400 dark:text-stone-500">Tap "+ New SOAP Entry" to record your insights.</p>
       </div>
 
-      <!-- The S.O.A.P. Form -->
       <div id="soap-form-container" class="hidden bg-white/80 dark:bg-stone-900/60 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-3xl p-6 shadow-xl animate-[fadeIn_0.3s_ease]">
         <h2 class="text-lg font-bold serif-font mb-4 border-b border-stone-100 dark:border-stone-850 pb-3">S.O.A.P. Journal Entry</h2>
         <div class="space-y-5">
@@ -403,12 +370,11 @@
       </div>
     </section>
 
-    <!-- 5. SETTINGS VIEW -->
     <section id="view-settings" class="view-section max-w-2xl mx-auto px-5 py-8">
       <h1 class="text-3xl font-bold tracking-tight serif-font mb-8">Settings</h1>
       
       <div class="space-y-4">
-        <!-- Appearance Settings -->
+
         <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl overflow-hidden shadow-sm">
           <div class="flex justify-between items-center p-5">
             <div class="flex items-center gap-3">
@@ -421,7 +387,6 @@
           </div>
         </div>
 
-        <!-- Offline Bibles Download Manager -->
         <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl p-5 shadow-sm">
           <div class="mb-4">
             <h2 class="font-semibold text-stone-800 dark:text-stone-200 text-sm flex items-center gap-2">
@@ -431,7 +396,7 @@
             <p class="text-xs text-stone-400 dark:text-stone-500 mt-1">Download entire Bible translations with 1 click to read anywhere offline.</p>
           </div>
           <div id="offline-versions-list" class="space-y-2.5">
-            <!-- Dynamically populated via JavaScript -->
+
           </div>
         </div>
       </div>
@@ -439,7 +404,6 @@
 
   </main>
 
-  <!-- NOTE MODAL -->
   <div id="note-modal" class="hidden fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-5 opacity-0 transition-opacity duration-200">
     <div id="note-modal-content" class="bg-white dark:bg-stone-900 rounded-3xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-200">
       <h3 class="font-bold text-base serif-font mb-4">Verse Reflection</h3>
@@ -451,7 +415,6 @@
     </div>
   </div>
 
-  <!-- FIXED BOTTOM NAVIGATION -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white/70 dark:bg-stone-950/70 backdrop-blur-xl border-t border-stone-200/50 dark:border-stone-900/50 z-50 transition-colors duration-500">
     <div class="max-w-2xl mx-auto px-6 py-3.5 flex justify-between items-center">
       <button class="nav-btn active flex flex-col items-center gap-1.5 text-amber-850 dark:text-amber-500 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-home">
@@ -482,7 +445,7 @@
   </nav>
 
   <script>
-    // --- LOCAL BIBLE FILE MAP ---
+
     const versionFiles = {
       'ASV': 'asv.json',
       'ESV': 'esv_bible.json',
@@ -506,14 +469,13 @@
     let activeBibleData = null;
     let activeBibleVersion = null;
 
-    // Helper to fetch and cache JSON data locally
     async function getBibleData(version) {
       const fileName = versionFiles[version] || versionFiles['KJV'];
       if (activeBibleVersion === version && activeBibleData) {
         return activeBibleData;
       }
 
-      // Check if translation exists in offline local storage
+
       const offlineCache = localStorage.getItem('offline_bible_' + version);
       if (offlineCache) {
         try {
@@ -525,7 +487,7 @@
         }
       }
 
-      // Fetch from local repository JSON
+
       const response = await fetch(fileName);
       if (!response.ok) throw new Error(`Could not load local file ${fileName}`);
       activeBibleData = await response.json();
@@ -533,7 +495,7 @@
       return activeBibleData;
     }
 
-    // Normalizes book names by stripping punctuation/spaces and mapping common variations
+
     function normalizeBookName(name) {
       if (!name) return "";
 
@@ -560,7 +522,6 @@
       return aliases[str] || str;
     }
 
-    // Universal Parser for common Bible JSON structures
     function getChapterVerses(bibleData, bookIdx, bookName, chapterNum) {
       if (!bibleData) return [];
 
@@ -575,7 +536,6 @@
 
       const targetNorm = normalizeBookName(bookName);
 
-      // Structure 1: Array of books
       if (Array.isArray(booksList)) {
         let book = booksList[bookIdx];
 
@@ -619,7 +579,6 @@
         }
       } 
       
-      // Structure 2: Object keyed by Book Name
       if (typeof bibleData === 'object' && bibleData !== null) {
         let bookKey = Object.keys(bibleData).find(k => k.toLowerCase() === bookName.toLowerCase());
         
@@ -656,7 +615,6 @@
       return [];
     }
 
-    // --- REALTIME TIME & ROTATING VERSE LOGIC ---
     function updateGreetingsAndDate() {
       const now = new Date();
       document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', { 
@@ -722,7 +680,6 @@
     setInterval(updateGreetingsAndDate, 60000); 
     setInterval(rotateDailyVerse, 300000); 
 
-    // --- 1. NAVIGATION LOGIC ---
     const navButtons = document.querySelectorAll('.nav-btn');
     const views = document.querySelectorAll('.view-section');
 
@@ -750,7 +707,6 @@
       document.querySelector(`[data-target="${tabId}"]`).click();
     }
 
-    // --- 2. DARK MODE LOGIC ---
     const htmlElement = document.documentElement;
     const themeToggleBtn = document.getElementById('theme-toggle');
 
@@ -765,7 +721,6 @@
       localStorage.setItem('theme', htmlElement.classList.contains('dark') ? 'dark' : 'light');
     });
 
-    // --- 3. BIBLE READER LOGIC ---
     const bookSelect = document.getElementById('book-select');
     const chapterSelect = document.getElementById('chapter-select');
     const versionSelect = document.getElementById('version-select');
@@ -783,7 +738,6 @@
     const btnTextInc = document.getElementById('btn-text-inc');
     const btnTextDec = document.getElementById('btn-text-dec');
     
-    // Font Buttons
     const btnFontSerif = document.getElementById('btn-font-serif');
     const btnFontSans = document.getElementById('btn-font-sans');
     const btnFontLora = document.getElementById('btn-font-lora');
@@ -792,8 +746,7 @@
 
     function applyTypography() {
       versesBody.style.fontSize = `${currentFontSize}px`;
-      
-      // Reset all buttons
+
       [btnFontSerif, btnFontSans, btnFontLora, btnFontInter, btnFontMono].forEach(btn => {
         if(btn) btn.classList.remove('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
       });
@@ -960,7 +913,6 @@
     btnFontInter.addEventListener('click', () => { currentFontFamily = 'inter'; applyTypography(); });
     btnFontMono.addEventListener('click', () => { currentFontFamily = 'mono'; applyTypography(); });
 
-    // --- FEATURE 1: OFFLINE BIBLE VERSION DOWNLOAD MANAGER IN SETTINGS ---
     function renderOfflineVersionsSettings() {
       const container = document.getElementById('offline-versions-list');
       if (!container) return;
@@ -1017,7 +969,6 @@
 
     renderOfflineVersionsSettings();
 
-    // --- FEATURE 2: 2-Column Printable Journal PDF Generator ---
     document.getElementById('btn-export-pdf').addEventListener('click', async () => {
       const bookName = bibleBooks[currentBookIdx].n;
       const ref = `${bookName} ${currentChapter}`;
@@ -1040,7 +991,6 @@
       pdfContainer.style.fontFamily = "'Playfair Display', Georgia, serif";
       pdfContainer.style.boxSizing = 'border-box';
 
-      // Header block
       const headerHTML = `
         <div style="border-bottom: 2px solid #854d0e; padding-bottom: 12px; margin-bottom: 24px; display: flex; justify-between; align-items: baseline; page-break-inside: avoid; break-inside: avoid;">
           <h1 style="font-size: 26px; font-weight: bold; margin: 0; color: #1c1917;">${ref}</h1>
@@ -1048,14 +998,12 @@
         </div>
       `;
 
-      // Verses HTML with page-break protection
       const versesHTML = versesData.map(v => `
         <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.8; color: #292524; text-align: justify; page-break-inside: avoid; break-inside: avoid;">
           <sup style="font-weight: bold; color: #854d0e; font-size: 10px; margin-right: 4px;">${v.verse}</sup>${v.text}
         </p>
       `).join('');
 
-      // Flex 2-Column Layout (Left: Scripture | Right: Blank area with ruled lines)
       pdfContainer.innerHTML = `
         ${headerHTML}
         <div style="display: flex; gap: 24px; width: 100%;">
@@ -1092,7 +1040,6 @@
       }
     });
 
-    // --- 4. ADVANCED LOCAL SEARCH ---
     const searchInput = document.getElementById('bible-search-input');
     const searchError = document.getElementById('search-error');
     const searchResultsBox = document.getElementById('search-results-box');
@@ -1148,7 +1095,6 @@
         }
       }
 
-      // Keyword Search using local JSON
       try {
         const data = await getBibleData(currentVersion);
         const matches = [];
@@ -1218,7 +1164,6 @@
     loadChapter();
     rotateDailyVerse();
 
-    // --- 5. ACTION MENU & NOTES ---
     const actionMenu = document.getElementById('action-menu');
     let activeVerseId = null;
 
@@ -1302,8 +1247,7 @@
       }
       actionMenu.classList.add('hidden');
     }
-    
-    // --- 6. READING PLANS LOGIC ---
+
     const plansHome = document.getElementById('plans-home');
     const planDetail = document.getElementById('plan-detail');
     const planDaysList = document.getElementById('plan-days-list');
@@ -1386,15 +1330,13 @@
       loadChapter();
       switchTab('view-bible');
     }
-    
-    // --- 7. FLOATING PEN, ERASER, & VECTOR SMOOTHING LOGIC ---
+
     const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
     const btnTogglePen = document.getElementById('btn-toggle-pen');
     const penSettings = document.getElementById('pen-settings');
     const chapterTextNote = document.getElementById('chapter-text-note');
     
-    // Vector Coordinate Engine
     let isDrawing = false;
     let isDrawModeOn = false;
     let currentPenColor = 'rgba(253, 224, 71, 0.7)';
@@ -1420,7 +1362,7 @@
 
     function saveUndoState() {
       if (undoStack.length >= MAX_UNDO_STATES) undoStack.shift();
-      // Deep clone the current strokes object for the undo stack
+
       undoStack.push(JSON.parse(JSON.stringify(currentStrokes)));
     }
     
@@ -1456,10 +1398,9 @@
 
     function startDraw(e) {
       if (!isDrawModeOn && e.pointerType !== 'pen') return;
-      // Palm Rejection Check
+
       if (e.pointerType === 'touch' && (e.width > 30 || e.height > 30)) return;
 
-      // Auto enable drawing mode for Pencil
       if (e.pointerType === 'pen' && !isDrawModeOn) togglePenMode(true);
 
       e.preventDefault();
@@ -1498,8 +1439,7 @@
       const ch = canvas.height;
 
       if (activeStroke) {
-        // Optional: dynamic Apple Pencil pressure could be appended here if we stored width per-point.
-        // For unified performance, we keep the stroke width uniform based on its initial state.
+
         activeStroke.points.push({ x: pos.x / cw, y: pos.y / ch });
         redrawCanvas();
       }
@@ -1517,15 +1457,13 @@
       if(currentStrokes.length > 0) saveStrokesToStorage();
     }
 
-    // Redraw entire vector path structure with Bezier smoothing and Blending
     function redrawCanvas() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       const cw = canvas.width;
       const ch = canvas.height;
       
       const isDarkMode = document.documentElement.classList.contains('dark');
-      
-      // Draw Legacy Raster Notes (Backward Compatibility)
+
       const legacyKey = `draw_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
       const legacyData = localStorage.getItem(legacyKey);
       if (legacyData) {
@@ -1542,8 +1480,7 @@
         ctx.lineWidth = stroke.width;
         ctx.lineCap = 'round';
         ctx.lineJoin = 'round';
-        
-        // Multiplier Blend Logic to preserve underlying scripture text
+
         if (stroke.tool === 'highlighter') {
           ctx.globalCompositeOperation = isDarkMode ? 'screen' : 'multiply';
         } else if (stroke.tool === 'eraser') {
@@ -1559,7 +1496,7 @@
             ctx.lineTo(stroke.points[i].x * cw, stroke.points[i].y * ch);
           }
         } else {
-          // Vector Bezier Approximation for Smooth organic lines
+
           for (let i = 1; i < stroke.points.length - 1; i++) {
             let xc = (stroke.points[i].x * cw + stroke.points[i + 1].x * cw) / 2;
             let yc = (stroke.points[i].y * ch + stroke.points[i + 1].y * ch) / 2;
@@ -1572,7 +1509,7 @@
         ctx.stroke();
       });
       
-      ctx.globalCompositeOperation = 'source-over'; // Default Reset
+      ctx.globalCompositeOperation = 'source-over';
     }
 
     function restoreDrawing() {
@@ -1654,8 +1591,7 @@
     window.addEventListener('resize', () => {
       resizeCanvas();
     });
-    
-    // --- 8. S.O.A.P. JOURNAL LOGIC ---
+
     const soapList = document.getElementById('soap-list');
     const soapEmpty = document.getElementById('soap-empty');
     const soapFormContainer = document.getElementById('soap-form-container');
