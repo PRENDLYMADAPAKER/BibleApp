@@ -960,15 +960,15 @@
 
       // Header block
       const headerHTML = `
-        <div style="border-bottom: 2px solid #854d0e; padding-bottom: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: baseline;">
+        <div style="border-bottom: 2px solid #854d0e; padding-bottom: 12px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: baseline; page-break-inside: avoid; break-inside: avoid;">
           <h1 style="font-size: 26px; font-weight: bold; margin: 0; color: #1c1917;">${ref}</h1>
           <span style="font-size: 12px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: #854d0e;">Selah Journal • ${currentVersion}</span>
         </div>
       `;
 
-      // Verses HTML
+      // Verses HTML with page-break protection
       const versesHTML = versesData.map(v => `
-        <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.8; color: #292524; text-align: justify;">
+        <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.8; color: #292524; text-align: justify; page-break-inside: avoid; break-inside: avoid;">
           <sup style="font-weight: bold; color: #854d0e; font-size: 10px; margin-right: 4px;">${v.verse}</sup>${v.text}
         </p>
       `).join('');
@@ -984,7 +984,7 @@
           </div>
 
           <!-- RIGHT COLUMN: Blank space with ruled lines for drawing/notes -->
-          <div style="width: 48%; min-height: 900px; padding-left: 6px; box-sizing: border-box; background-image: repeating-linear-gradient(transparent, transparent 27px, #e5e5e5 28px);">
+          <div style="width: 48%; padding-left: 6px; box-sizing: border-box; background-image: repeating-linear-gradient(transparent, transparent 27px, #e5e5e5 28px);">
           </div>
 
         </div>
@@ -993,11 +993,12 @@
       document.body.appendChild(pdfContainer);
 
       const opt = {
-        margin:       0.3,
+        margin:       [0.4, 0.4, 0.4, 0.4],
         filename:     `Selah_${bookName.replace(/\s+/g, '_')}_${currentChapter}_Journal.pdf`,
         image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true },
-        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        html2canvas:  { scale: 2, useCORS: true, logging: false },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
       };
 
       try {
