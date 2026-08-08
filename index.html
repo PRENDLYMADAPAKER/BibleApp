@@ -210,23 +210,41 @@
         <button onclick="handleAction('clear')" class="w-6 h-6 rounded-full bg-stone-500 hover:scale-110 transition-transform flex items-center justify-center text-white text-[9px] font-bold">×</button>
       </div>
 
-      <!-- Floating Pen Tools -->
+      <!-- Floating Pen Tools & Tool Switcher -->
       <div class="fixed bottom-24 right-5 z-40 flex flex-col items-end gap-3 pointer-events-auto">
-        <div id="pen-settings" class="hidden bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl shadow-xl p-4 flex-col items-center gap-4 transition-all">
-          <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center w-full border-b border-stone-100 dark:border-stone-800/80 pb-2">Pen Thickness</label>
-          <input type="range" id="pen-thickness" min="1" max="15" value="4" class="w-24 h-1 bg-stone-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer">
-          <div class="flex gap-3">
-            <button onclick="changePenColor('rgba(253, 224, 71, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-yellow-300 ring-2 ring-offset-2 ring-amber-500 transition-all"></button>
-            <button onclick="changePenColor('rgba(248, 113, 113, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-red-400 hover:scale-110 transition-all"></button>
-            <button onclick="changePenColor('rgba(96, 165, 250, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-blue-400 hover:scale-110 transition-all"></button>
-            <button onclick="changePenColor('rgba(30, 41, 59, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-stone-800 dark:bg-stone-100 hover:scale-110 transition-all"></button>
+        <div id="pen-settings" class="hidden bg-white/95 dark:bg-stone-900/95 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl shadow-xl p-4 flex-col items-center gap-3 transition-all min-w-[210px]">
+          
+          <!-- Tool Selection (Pen, Highlighter, Stroke Eraser) -->
+          <div class="flex bg-stone-100 dark:bg-stone-800 p-1 rounded-xl w-full gap-1">
+            <button id="tool-pen" onclick="setPenTool('pen')" class="tool-btn flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg bg-white dark:bg-stone-700 shadow-sm text-amber-800 dark:text-amber-400 transition-all">Pen</button>
+            <button id="tool-highlighter" onclick="setPenTool('highlighter')" class="tool-btn flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 transition-all">Highlight</button>
+            <button id="tool-eraser" onclick="setPenTool('eraser')" class="tool-btn flex-1 py-1.5 text-[10px] font-bold uppercase tracking-wider rounded-lg text-stone-500 dark:text-stone-400 hover:text-stone-800 dark:hover:text-stone-200 flex items-center justify-center gap-1 transition-all">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              Erase
+            </button>
           </div>
+
+          <!-- Color & Thickness Options -->
+          <div id="color-thickness-controls" class="flex flex-col items-center gap-3 w-full">
+            <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center w-full border-b border-stone-100 dark:border-stone-800/80 pb-1">Thickness</label>
+            <input type="range" id="pen-thickness" min="1" max="25" value="4" class="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer">
+            
+            <div class="flex gap-2 justify-center">
+              <button onclick="changePenColor('rgba(253, 224, 71, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-yellow-300 ring-2 ring-offset-2 ring-amber-500 transition-all"></button>
+              <button onclick="changePenColor('rgba(248, 113, 113, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-red-400 hover:scale-110 transition-all"></button>
+              <button onclick="changePenColor('rgba(96, 165, 250, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-blue-400 hover:scale-110 transition-all"></button>
+              <button onclick="changePenColor('rgba(74, 222, 128, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-green-400 hover:scale-110 transition-all"></button>
+              <button onclick="changePenColor('rgba(30, 41, 59, 0.9)', this)" class="color-btn w-6 h-6 rounded-full bg-stone-800 dark:bg-stone-100 hover:scale-110 transition-all"></button>
+            </div>
+          </div>
+
           <div class="flex w-full gap-2 pt-2 border-t border-stone-100 dark:border-stone-800/80">
             <button id="btn-undo-canvas" class="flex-1 text-[10px] font-bold text-stone-500 hover:text-amber-600 transition-colors uppercase tracking-wider">Undo</button>
             <button id="btn-clear-canvas" class="flex-1 text-[10px] font-bold text-red-500 hover:text-red-700 transition-colors uppercase tracking-wider">Clear</button>
           </div>
         </div>
-        <button id="btn-toggle-pen" class="w-12 h-12 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95">
+
+        <button id="btn-toggle-pen" title="Study / Freehand Pen Mode" class="w-12 h-12 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
         </button>
       </div>
@@ -241,7 +259,7 @@
           <h1 id="chapter-title" class="text-3xl sm:text-4xl font-semibold tracking-tight text-center mb-6 font-serif"></h1>
 
           <!-- Split 2-Column Container: Left Scripture | Right Blank Note/Drawing Area -->
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch relative">
+          <div id="bible-split-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-6 items-stretch relative">
             
             <!-- LEFT COLUMN: Scripture Verses -->
             <div id="left-bible-col" class="flex flex-col justify-between pr-0 sm:pr-2">
@@ -250,17 +268,17 @@
               </div>
             </div>
 
-            <!-- RIGHT COLUMN: Blank Note / Drawing Canvas Area (Height automatically matches left column) -->
+            <!-- RIGHT COLUMN: Blank Note / Drawing Canvas Area -->
             <div id="right-notes-col" class="relative min-h-[350px] sm:min-h-full rounded-2xl border border-stone-200/80 dark:border-stone-800/80 bg-white/50 dark:bg-stone-900/40 backdrop-blur-sm overflow-hidden flex flex-col shadow-inner group transition-all">
               <!-- Ruled lines background pattern -->
               <div class="absolute inset-0 pointer-events-none opacity-40 dark:opacity-20" style="background-image: repeating-linear-gradient(transparent, transparent 27px, #a8a29e 28px);"></div>
               
               <!-- Text notes overlay for optional typing -->
               <textarea id="chapter-text-note" placeholder="Tap or write notes here..." class="w-full h-full p-4 bg-transparent resize-none focus:outline-none text-sm text-stone-800 dark:text-stone-200 relative z-10 font-sans leading-[28px] selection:bg-amber-100 dark:selection:bg-amber-900/40"></textarea>
-              
-              <!-- Apple Pencil / Stylus Interactive Canvas Overlay -->
-              <canvas id="drawing-canvas" class="absolute inset-0 z-20 pointer-events-none"></canvas>
             </div>
+
+            <!-- Apple Pencil / Stylus Overlay Canvas across Verses & Notes -->
+            <canvas id="drawing-canvas" class="absolute inset-0 z-20 pointer-events-none w-full h-full"></canvas>
 
           </div>
           
@@ -833,7 +851,7 @@
           const isHighlighted = localStorage.getItem('hl_' + verseId);
           const hasNote = localStorage.getItem('note_' + verseId);
           
-          return `<span id="${verseId}" class="${isHighlighted ? 'highlight-' + isHighlighted + ' px-1 rounded' : ''} cursor-pointer block py-1 relative z-30 transition-colors">
+          return `<span id="${verseId}" class="${isHighlighted ? 'highlight-' + isHighlighted + ' px-1 rounded' : ''} cursor-pointer block py-1 relative z-10 transition-colors">
             <span class="text-[0.6em] font-extrabold text-amber-700 dark:text-amber-500 align-super mr-1">${v.verse}</span>${v.text} 
             ${hasNote ? '<span class="note-indicator text-xs ml-1 opacity-75">📝</span>' : ''}
           </span>`;
@@ -1245,11 +1263,11 @@
         actionMenu.classList.add('hidden');
         return;
       } else if (action === 'clear') {
-        verseEl.className = "cursor-pointer block py-1 relative z-30 transition-colors";
+        verseEl.className = "cursor-pointer block py-1 relative z-10 transition-colors";
         localStorage.removeItem(`hl_${activeVerseId}`);
       } else {
         const color = action.replace('highlight-', '');
-        verseEl.className = `highlight-${color} px-1 rounded cursor-pointer block py-1 relative z-30 transition-colors`;
+        verseEl.className = `highlight-${color} px-1 rounded cursor-pointer block py-1 relative z-10 transition-colors`;
         localStorage.setItem(`hl_${activeVerseId}`, color);
       }
       actionMenu.classList.add('hidden');
@@ -1339,7 +1357,7 @@
       switchTab('view-bible');
     }
     
-    // --- 7. FLOATING PEN & APPLE PENCIL / STYLUS DRAWING LOGIC WITH PALM REJECTION ---
+    // --- 7. ADVANCED VECTOR CANVAS LOGIC (PEN, HIGHLIGHTER, STROKE ERASER, VERSE-RELATIVE) ---
     const canvas = document.getElementById('drawing-canvas');
     const ctx = canvas.getContext('2d');
     const btnTogglePen = document.getElementById('btn-toggle-pen');
@@ -1348,10 +1366,13 @@
     
     let isDrawing = false;
     let isDrawModeOn = false;
-    let currentPenColor = 'rgba(253, 224, 71, 0.7)';
+    let currentTool = 'pen'; // 'pen' | 'highlighter' | 'eraser'
+    let currentPenColor = 'rgba(253, 224, 71, 0.85)';
     
-    let undoStack = [];
+    let strokes = []; // Vector path stroke data
+    let undoStack = []; // Undo history states
     const MAX_UNDO_STATES = 15;
+    let activeStroke = null;
 
     // Auto-save written text note in localStorage
     if (chapterTextNote) {
@@ -1368,11 +1389,35 @@
     }
 
     function saveUndoState() {
-      if (undoStack.length >= MAX_UNDO_STATES) {
-        undoStack.shift();
-      }
-      undoStack.push(canvas.toDataURL());
+      if (undoStack.length >= MAX_UNDO_STATES) undoStack.shift();
+      undoStack.push(JSON.stringify(strokes));
     }
+
+    // Set Tool (Pen, Highlighter, Stroke Eraser)
+    window.setPenTool = function(tool) {
+      currentTool = tool;
+      document.querySelectorAll('.tool-btn').forEach(btn => {
+        btn.classList.remove('bg-white', 'dark:bg-stone-700', 'shadow-sm', 'text-amber-800', 'dark:text-amber-400');
+        btn.classList.add('text-stone-500', 'dark:text-stone-400');
+      });
+      const activeBtn = document.getElementById(`tool-${tool}`);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-white', 'dark:bg-stone-700', 'shadow-sm', 'text-amber-800', 'dark:text-amber-400');
+        activeBtn.classList.remove('text-stone-500', 'dark:text-stone-400');
+      }
+
+      const colorControls = document.getElementById('color-thickness-controls');
+      if (tool === 'eraser') {
+        colorControls.classList.add('opacity-40', 'pointer-events-none');
+      } else {
+        colorControls.classList.remove('opacity-40', 'pointer-events-none');
+        if (tool === 'highlighter') {
+          document.getElementById('pen-thickness').value = 14;
+        } else if (tool === 'pen') {
+          document.getElementById('pen-thickness').value = 4;
+        }
+      }
+    };
 
     function resizeCanvas() {
       if (!canvas || !canvas.parentElement) return;
@@ -1386,116 +1431,247 @@
         if (canvas.width !== targetW || canvas.height !== targetH) {
           canvas.width = targetW;
           canvas.height = targetH;
-          restoreDrawing();
         }
       }
+      redrawCanvas();
     }
 
-    function getCanvasPos(e) {
-      const rect = canvas.getBoundingClientRect();
-      return { 
-        x: e.clientX - rect.left, 
-        y: e.clientY - rect.top 
+    // Verse-Relative Coordinate calculation (percentages relative to verse or notes column bounding box)
+    function getRelativePoint(clientX, clientY) {
+      let elem = document.elementFromPoint(clientX, clientY);
+      let verseSpan = elem ? elem.closest('span[id^="v_"]') : null;
+      let targetElem = verseSpan || (elem ? elem.closest('#right-notes-col') : null) || document.getElementById('verses-body') || document.getElementById('bible-split-grid');
+      
+      if (!targetElem) targetElem = document.getElementById('bible-split-grid');
+
+      const elemRect = targetElem.getBoundingClientRect();
+      const xPct = elemRect.width > 0 ? (clientX - elemRect.left) / elemRect.width : 0;
+      const yPct = elemRect.height > 0 ? (clientY - elemRect.top) / elemRect.height : 0;
+
+      return {
+        targetId: targetElem.id || 'bible-split-grid',
+        xPct: Math.max(0, Math.min(1, xPct)),
+        yPct: Math.max(0, Math.min(1, yPct))
       };
     }
 
-    // Pointer event start with Palm Rejection & Apple Pencil detection
+    // Convert relative verse coordinates back to absolute canvas pixels
+    function pointToCanvasPx(pt, canvasRect) {
+      let elem = document.getElementById(pt.targetId);
+      if (!elem) elem = document.getElementById('bible-split-grid');
+      if (!elem) return { x: 0, y: 0 };
+
+      const elemRect = elem.getBoundingClientRect();
+      return {
+        x: (elemRect.left - canvasRect.left) + (pt.xPct * elemRect.width),
+        y: (elemRect.top - canvasRect.top) + (pt.yPct * elemRect.height)
+      };
+    }
+
+    // Redraw vector paths with Bezier Path Smoothing and Highlighter Multiply Blend Mode
+    function redrawCanvas() {
+      if (!canvas) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const canvasRect = canvas.getBoundingClientRect();
+
+      strokes.forEach(stroke => {
+        if (!stroke.points || stroke.points.length === 0) return;
+
+        const pxPoints = stroke.points.map(pt => pointToCanvasPx(pt, canvasRect));
+
+        ctx.save();
+        if (stroke.tool === 'highlighter') {
+          ctx.globalCompositeOperation = 'multiply';
+          ctx.strokeStyle = stroke.color;
+          ctx.lineWidth = stroke.thickness || 14;
+          ctx.lineCap = 'square';
+          ctx.lineJoin = 'miter';
+        } else {
+          ctx.globalCompositeOperation = 'source-over';
+          ctx.strokeStyle = stroke.color;
+          ctx.lineWidth = stroke.thickness || 4;
+          ctx.lineCap = 'round';
+          ctx.lineJoin = 'round';
+        }
+
+        if (pxPoints.length === 1) {
+          ctx.beginPath();
+          ctx.arc(pxPoints[0].x, pxPoints[0].y, (stroke.thickness || 4) / 2, 0, Math.PI * 2);
+          ctx.fillStyle = stroke.color;
+          ctx.fill();
+        } else if (pxPoints.length === 2) {
+          ctx.beginPath();
+          ctx.moveTo(pxPoints[0].x, pxPoints[0].y);
+          ctx.lineTo(pxPoints[1].x, pxPoints[1].y);
+          ctx.stroke();
+        } else {
+          // Smooth Bezier Curve through vector points
+          ctx.beginPath();
+          ctx.moveTo(pxPoints[0].x, pxPoints[0].y);
+
+          for (let i = 1; i < pxPoints.length - 1; i++) {
+            const xc = (pxPoints[i].x + pxPoints[i + 1].x) / 2;
+            const yc = (pxPoints[i].y + pxPoints[i + 1].y) / 2;
+            ctx.quadraticCurveTo(pxPoints[i].x, pxPoints[i].y, xc, yc);
+          }
+          const last = pxPoints.length - 1;
+          ctx.lineTo(pxPoints[last].x, pxPoints[last].y);
+          ctx.stroke();
+        }
+        ctx.restore();
+      });
+    }
+
+    // STROKE-BASED ERASER: Deletes entire line path instantly upon touch/cross
+    function eraseStrokesAt(clientX, clientY) {
+      const canvasRect = canvas.getBoundingClientRect();
+      const p = { x: clientX - canvasRect.left, y: clientY - canvasRect.top };
+      const eraseRadius = Math.max(16, parseInt(document.getElementById('pen-thickness').value) * 2);
+      
+      let erased = false;
+
+      strokes = strokes.filter(stroke => {
+        if (!stroke.points || stroke.points.length === 0) return false;
+        const pxPoints = stroke.points.map(pt => pointToCanvasPx(pt, canvasRect));
+
+        for (let i = 0; i < pxPoints.length - 1; i++) {
+          const d = distToSegment(p, pxPoints[i], pxPoints[i + 1]);
+          if (d <= eraseRadius) {
+            erased = true;
+            return false; // Remove entire stroke
+          }
+        }
+        if (pxPoints.length === 1) {
+          const d = Math.hypot(p.x - pxPoints[0].x, p.y - pxPoints[0].y);
+          if (d <= eraseRadius) {
+            erased = true;
+            return false;
+          }
+        }
+        return true;
+      });
+
+      if (erased) {
+        saveDrawingState();
+        redrawCanvas();
+      }
+    }
+
+    function distToSegment(p, v, w) {
+      const l2 = (v.x - w.x) ** 2 + (v.y - w.y) ** 2;
+      if (l2 === 0) return Math.hypot(p.x - v.x, p.y - v.y);
+      let t = ((p.x - v.x) * (w.x - v.x) + (p.y - v.y) * (w.y - v.y)) / l2;
+      t = Math.max(0, Math.min(1, t));
+      return Math.hypot(p.x - (v.x + t * (w.x - v.x)), p.y - (v.y + t * (w.y - v.y)));
+    }
+
+    // Pointer events with Apple Pencil & Palm Rejection
     function startDraw(e) {
       if (!isDrawModeOn && e.pointerType !== 'pen') return;
 
-      // Palm Rejection: Filter out large touch contacts (palm resting on iPad screen)
+      // Palm Rejection: Filter out large touch contacts
       if (e.pointerType === 'touch' && (e.width > 30 || e.height > 30)) return;
 
-      // Auto enable drawing mode if Apple Pencil / Stylus is used directly
+      // Auto enable pen mode when stylus is used directly
       if (e.pointerType === 'pen' && !isDrawModeOn) {
         togglePenMode(true);
       }
 
       e.preventDefault();
-      saveUndoState();
       isDrawing = true;
-      
-      try {
-        canvas.setPointerCapture(e.pointerId);
-      } catch(err) {}
 
-      const pos = getCanvasPos(e);
-      ctx.beginPath();
-      ctx.moveTo(pos.x, pos.y);
-    }
+      try { canvas.setPointerCapture(e.pointerId); } catch(err) {}
 
-    // Pointer event move
-    function draw(e) {
-      if (!isDrawing) return;
-
-      // Palm Rejection check on move
-      if (e.pointerType === 'touch' && (e.width > 35 || e.height > 35)) return;
-
-      e.preventDefault();
-      const pos = getCanvasPos(e);
-      
-      // Dynamic thickness with Apple Pencil pressure sensitivity
-      let baseWidth = document.getElementById('pen-thickness').value;
-      if (e.pointerType === 'pen' && e.pressure > 0) {
-        baseWidth = baseWidth * (0.5 + e.pressure);
+      if (currentTool === 'eraser') {
+        saveUndoState();
+        eraseStrokesAt(e.clientX, e.clientY);
+        return;
       }
 
-      ctx.lineTo(pos.x, pos.y);
-      ctx.strokeStyle = currentPenColor;
-      ctx.lineWidth = baseWidth;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.stroke();
+      saveUndoState();
+
+      let thick = parseInt(document.getElementById('pen-thickness').value);
+      if (e.pointerType === 'pen' && e.pressure > 0) {
+        thick = thick * (0.5 + e.pressure);
+      }
+
+      activeStroke = {
+        id: Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+        tool: currentTool,
+        color: currentPenColor,
+        thickness: thick,
+        points: [getRelativePoint(e.clientX, e.clientY)]
+      };
+
+      strokes.push(activeStroke);
+      redrawCanvas();
     }
 
-    // Pointer event end
+    function draw(e) {
+      if (!isDrawing) return;
+      if (e.pointerType === 'touch' && (e.width > 35 || e.height > 35)) return; // Palm rejection
+
+      e.preventDefault();
+
+      if (currentTool === 'eraser') {
+        eraseStrokesAt(e.clientX, e.clientY);
+        return;
+      }
+
+      if (activeStroke) {
+        activeStroke.points.push(getRelativePoint(e.clientX, e.clientY));
+        redrawCanvas();
+      }
+    }
+
     function stopDraw(e) {
       if (!isDrawing) return;
       isDrawing = false;
-      ctx.closePath();
       
       if (e && e.pointerId) {
-        try {
-          canvas.releasePointerCapture(e.pointerId);
-        } catch(err) {}
+        try { canvas.releasePointerCapture(e.pointerId); } catch(err) {}
       }
 
-      const chapterKey = `draw_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
-      localStorage.setItem(chapterKey, canvas.toDataURL());
+      activeStroke = null;
+      saveDrawingState();
+    }
+
+    function saveDrawingState() {
+      const chapterKey = `draw_v2_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
+      localStorage.setItem(chapterKey, JSON.stringify(strokes));
     }
 
     function restoreDrawing() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      undoStack = [];
-      const chapterKey = `draw_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
-      const savedDraw = localStorage.getItem(chapterKey);
-      if (savedDraw) {
-        const img = new Image();
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        };
-        img.src = savedDraw;
+      const chapterKey = `draw_v2_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
+      const savedData = localStorage.getItem(chapterKey);
+      
+      if (savedData) {
+        try {
+          strokes = JSON.parse(savedData) || [];
+        } catch(e) {
+          strokes = [];
+        }
+      } else {
+        strokes = [];
       }
+      redrawCanvas();
     }
 
     document.getElementById('btn-clear-canvas').addEventListener('click', () => {
       saveUndoState();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const chapterKey = `draw_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
-      localStorage.removeItem(chapterKey);
+      strokes = [];
+      saveDrawingState();
+      redrawCanvas();
     });
 
     document.getElementById('btn-undo-canvas').addEventListener('click', () => {
       if (undoStack.length > 0) {
         const prevState = undoStack.pop();
-        const img = new Image();
-        img.onload = () => {
-          ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          const chapterKey = `draw_${bibleBooks[currentBookIdx].n}_${currentChapter}`;
-          localStorage.setItem(chapterKey, canvas.toDataURL());
-        };
-        img.src = prevState;
+        try {
+          strokes = JSON.parse(prevState);
+          saveDrawingState();
+          redrawCanvas();
+        } catch(e) {}
       }
     });
 
@@ -1534,7 +1710,6 @@
 
     window.addEventListener('resize', () => {
       resizeCanvas();
-      restoreDrawing();
     });
     
     // --- 8. S.O.A.P. JOURNAL LOGIC ---
