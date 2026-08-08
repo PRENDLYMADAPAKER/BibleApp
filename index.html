@@ -1351,12 +1351,13 @@
     const penSettings = document.getElementById('pen-settings');
     const chapterTextNote = document.getElementById('chapter-text-note');
     
+    // Vector Coordinate Engine
     let isDrawing = false;
     let isDrawModeOn = false;
     let currentPenColor = 'rgba(253, 224, 71, 0.7)';
     let currentDrawingTool = 'pen'; // 'pen', 'highlighter', 'eraser'
-    
-    // Vector Coordinate Engine
+    let hasErasedInCurrentStroke = false; // Prevents undo stack flooding during continuous erasure
+
     let currentStrokes = [];
     let activeStroke = null;
     let undoStack = [];
@@ -1426,6 +1427,7 @@
       const ch = canvas.height;
 
       if (currentDrawingTool === 'eraser') {
+        hasErasedInCurrentStroke = false;
         isDrawing = true;
         eraseAt(pos.x / cw, pos.y / ch);
         return;
@@ -1484,7 +1486,7 @@
       if(currentStrokes.length > 0) saveStrokesToStorage();
     }
     
-    // Stroke-Based Eraser logic
+    // Stroke-Based Eraser logic (Updated to detect segment distances)
     function eraseAt(nx, ny) {
       const cw = canvas.width;
       const ch = canvas.height;
@@ -1498,18 +1500,45 @@
         let stroke = currentStrokes[i];
         let hit = false;
         
-        for (let pt of stroke.points) {
-          let px = pt.x * cw;
-          let py = pt.y * ch;
-          let dist = Math.hypot(px - ex, py - ey);
-          if (dist <= eraseRadius + (stroke.width / 2)) {
+        if (stroke.points.length === 1) {
+          let px = stroke.points[0].x * cw;
+          let py = stroke.points[0].y * ch;
+          if (Math.hypot(px - ex, py - ey) <= eraseRadius + (stroke.width / 2)) {
             hit = true;
-            break;
+          }
+        } else {
+          for (let j = 0; j < stroke.points.length - 1; j++) {
+            let px = stroke.points[j].x * cw;
+            let py = stroke.points[j].y * ch;
+            let qx = stroke.points[j+1].x * cw;
+            let qy = stroke.points[j+1].y * ch;
+            
+            // Point to Line Segment Distance Calculation
+            let l2 = (qx - px) ** 2 + (qy - py) ** 2;
+            let dist;
+            
+            if (l2 === 0) {
+              dist = Math.hypot(ex - px, ey - py);
+            } else {
+              let t = ((ex - px) * (qx - px) + (ey - py) * (qy - py)) / l2;
+              t = Math.max(0, Math.min(1, t));
+              let projX = px + t * (qx - px);
+              let projY = py + t * (qy - py);
+              dist = Math.hypot(ex - projX, ey - projY);
+            }
+            
+            if (dist <= eraseRadius + (stroke.width / 2)) {
+              hit = true;
+              break;
+            }
           }
         }
         
         if (hit) {
-          if (!strokeRemoved) saveUndoState();
+          if (!hasErasedInCurrentStroke) {
+            saveUndoState();
+            hasErasedInCurrentStroke = true;
+          }
           currentStrokes.splice(i, 1);
           strokeRemoved = true;
         }
