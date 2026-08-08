@@ -428,11 +428,40 @@
       return activeBibleData;
     }
 
+    // Normalizes book names by stripping punctuation/spaces and mapping common variations
+    function normalizeBookName(name) {
+      if (!name) return "";
+
+      let str = name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+      str = str
+        .replace(/^first/, "1")
+        .replace(/^second/, "2")
+        .replace(/^third/, "3");
+
+      const aliases = {
+        "songofsolomon": "songofsongs",
+        "songofsongs": "songofsongs",
+        "song": "songofsongs",
+        "solomon": "songofsongs",
+        "canticleofcanticles": "songofsongs",
+
+        "psalm": "psalms",
+        "psalms": "psalms",
+
+        "revelations": "revelation",
+        "apocalypse": "revelation",
+
+        "actsoftheapostles": "acts"
+      };
+
+      return aliases[str] || str;
+    }
+
     // Universal Parser for common Bible JSON structures
     function getChapterVerses(bibleData, bookIdx, bookName, chapterNum) {
       if (!bibleData) return [];
 
-      // Extract books list if wrapped inside a root object (e.g. { "translation": "...", "books": [...] })
       let booksList = bibleData;
       if (!Array.isArray(bibleData) && typeof bibleData === 'object') {
         if (Array.isArray(bibleData.books)) {
@@ -442,12 +471,26 @@
         }
       }
 
+      const targetNorm = normalizeBookName(bookName);
+
       // Structure 1: Array of books
       if (Array.isArray(booksList)) {
-        const book = booksList[bookIdx] || booksList.find(b => 
-          (b.name && b.name.toLowerCase() === bookName.toLowerCase()) || 
-          (b.abbrev && b.abbrev.toLowerCase() === bookName.toLowerCase())
-        );
+        let book = booksList[bookIdx];
+
+        if (book) {
+          const bName = book.name || book.abbrev || book.book_name || "";
+          if (bName && normalizeBookName(bName) !== targetNorm && booksList.length !== 66) {
+            book = null;
+          }
+        }
+
+        if (!book) {
+          book = booksList.find(b => {
+            const name = b.name || b.abbrev || b.book_name || "";
+            return normalizeBookName(name) === targetNorm;
+          });
+        }
+
         if (book) {
           const chapters = book.chapters || book.chapters_data || book;
           let chapter = null;
@@ -474,9 +517,14 @@
         }
       } 
       
-      // Structure 2: Object keyed by Book Name { "Genesis": { "1": { "1": "In the beginning..." } } }
+      // Structure 2: Object keyed by Book Name
       if (typeof bibleData === 'object' && bibleData !== null) {
-        const bookKey = Object.keys(bibleData).find(k => k.toLowerCase() === bookName.toLowerCase());
+        let bookKey = Object.keys(bibleData).find(k => k.toLowerCase() === bookName.toLowerCase());
+        
+        if (!bookKey) {
+          bookKey = Object.keys(bibleData).find(k => normalizeBookName(k) === targetNorm);
+        }
+
         if (bookKey && bibleData[bookKey]) {
           const bookObj = bibleData[bookKey];
           const chapters = bookObj.chapters || bookObj;
@@ -829,7 +877,9 @@
           if (parts[2]) verseNum = parseInt(parts[2]);
         }
         
-        const bookIdx = bibleBooks.findIndex(b => b.n.toLowerCase() === bookStr.toLowerCase());
+        const targetSearchNorm = normalizeBookName(bookStr);
+        const bookIdx = bibleBooks.findIndex(b => normalizeBookName(b.n) === targetSearchNorm);
+
         if (bookIdx !== -1) {
           currentBookIdx = bookIdx;
           currentChapter = chapNum;
@@ -1054,7 +1104,7 @@
                 <p class="text-sm font-bold text-stone-850 dark:text-stone-200 mt-0.5">${textRef}</p>
               </div>
             </div>
-            <button onclick="readPlanDay(${day[0].bIdx}, ${day[0].c})" class="text-[10px] font-bold bg-stone-100 dark:bg-stone-800 px-3.5 py-2 rounded-xl hover:bg-amber-800 hover:text-white dark:hover:bg-amber-600 transition-all">Read</button>
+            <button onclick="readPlanDay(${day[0].bIdx}, ${day[0].c})" class="text-[10px] font-bold bg-stone-100 dark:bg-stone-800 px-3.5 py-2 rounded-xl hover:bg-amber-880 hover:text-white dark:hover:bg-amber-600 transition-all">Read</button>
           </div>
         `;
       }).join('');
