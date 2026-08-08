@@ -966,26 +966,26 @@
         </div>
       `;
 
-      // Right Column Verses HTML
+      // Verses HTML
       const versesHTML = versesData.map(v => `
         <p style="margin: 0 0 12px 0; font-size: 13px; line-height: 1.8; color: #292524; text-align: justify;">
           <sup style="font-weight: bold; color: #854d0e; font-size: 10px; margin-right: 4px;">${v.verse}</sup>${v.text}
         </p>
       `).join('');
 
-      // Flex 2-Column Layout (Left: Blank for Apple Pencil/Writing | Right: Scripture)
+      // Flex 2-Column Layout (Left: Scripture | Right: Blank area with ruled lines)
       pdfContainer.innerHTML = `
         ${headerHTML}
         <div style="display: flex; gap: 24px; width: 100%;">
           
-          <!-- LEFT COLUMN: Blank space with ruled lines for drawing/notes -->
-          <div style="width: 48%; border-right: 1px dashed #cccccc; min-height: 900px; padding-right: 18px; box-sizing: border-box; background-image: repeating-linear-gradient(transparent, transparent 27px, #e5e5e5 28px);">
-            <!-- Left empty on purpose for iPad Apple Pencil drawing or manual journaling -->
+          <!-- LEFT COLUMN: Bible Books, Chapters, and Verses -->
+          <div style="width: 52%; border-right: 1px dashed #cccccc; padding-right: 18px; box-sizing: border-box;">
+            ${versesHTML}
           </div>
 
-          <!-- RIGHT COLUMN: Bible Books, Chapters, and Verses -->
-          <div style="width: 52%; box-sizing: border-box; padding-left: 6px;">
-            ${versesHTML}
+          <!-- RIGHT COLUMN: Blank space with ruled lines for drawing/notes -->
+          <div style="width: 48%; min-height: 900px; padding-left: 6px; box-sizing: border-box; background-image: repeating-linear-gradient(transparent, transparent 27px, #e5e5e5 28px);">
+            <!-- Right empty on purpose for iPad Apple Pencil drawing or manual journaling -->
           </div>
 
         </div>
