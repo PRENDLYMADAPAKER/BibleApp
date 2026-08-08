@@ -30,10 +30,10 @@
   <!-- html2pdf.js CDN for 2-Column Printable PDF Generation -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts (Enhanced with more options) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
     body { font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -97,6 +97,13 @@
     #drawing-canvas {
       touch-action: none;
     }
+
+    /* Custom Dropdown Arrow for Selects */
+    .custom-select {
+      background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2220%22%20height%3D%2220%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M5%208l5%205%205-5%22%20stroke%3D%22%23a8a29e%22%20stroke-width%3D%222%22%20fill%3D%22none%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+    }
   </style>
 </head>
 <body class="bg-stone-50 dark:bg-stone-950 text-stone-900 dark:text-stone-100 transition-colors duration-500 min-h-screen flex flex-col selection:bg-amber-100 dark:selection:bg-amber-900/30 relative overflow-x-hidden">
@@ -135,11 +142,13 @@
       <!-- Sticky Bible Nav -->
       <div class="sticky top-0 z-20 bg-stone-50/95 dark:bg-stone-950/95 backdrop-blur-md border-b border-stone-200/50 dark:border-stone-900/50 pb-3 mb-6 flex flex-wrap gap-2 justify-between items-center -mx-5 px-5">
         <div class="flex gap-2">
-          <select id="book-select" class="bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-xl px-3 py-2 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-sm transition-all"></select>
-          <select id="chapter-select" class="bg-white dark:bg-stone-900 border border-stone-200/80 dark:border-stone-800 rounded-xl px-3 py-2 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/20 shadow-sm transition-all"></select>
+          <!-- Enhanced Selects -->
+          <select id="book-select" class="custom-select appearance-none bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl px-4 py-2 pr-8 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:shadow hover:border-stone-300 dark:hover:border-stone-700 transition-all cursor-pointer"></select>
+          <select id="chapter-select" class="custom-select appearance-none bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 rounded-xl px-4 py-2 pr-8 text-xs font-bold tracking-wide focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:shadow hover:border-stone-300 dark:hover:border-stone-700 transition-all cursor-pointer"></select>
         </div>
         <div class="flex gap-1.5 items-center">
-          <select id="version-select" class="bg-amber-50/60 dark:bg-amber-950/40 text-amber-850 dark:text-amber-400 border border-amber-200/60 dark:border-amber-900/40 rounded-xl px-2.5 py-2 text-[10px] font-extrabold uppercase tracking-widest focus:outline-none">
+          <!-- Enhanced Version Select -->
+          <select id="version-select" class="custom-select appearance-none bg-amber-50/80 dark:bg-amber-950/40 text-amber-900 dark:text-amber-400 border border-amber-200/80 dark:border-amber-900/40 rounded-xl px-3 py-2 pr-7 text-[10px] font-extrabold uppercase tracking-widest focus:outline-none focus:ring-2 focus:ring-amber-500/50 shadow-sm hover:bg-amber-100 dark:hover:bg-amber-900/60 transition-all cursor-pointer">
             <option value="ASV">ASV</option>
             <option value="ESV">ESV</option>
             <option value="ISV">ISV</option>
@@ -147,15 +156,16 @@
             <option value="NIV">NIV</option>
             <option value="NLT">NLT</option>
           </select>
-          <button id="btn-search-toggle" title="Search Bible" class="p-2 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 rounded-xl shadow-sm hover:text-amber-800 dark:hover:text-amber-500 hover:border-stone-300 dark:hover:border-stone-700 transition-all">
+          <!-- Enhanced Buttons -->
+          <button id="btn-search-toggle" title="Search Bible" class="p-2 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:text-amber-800 dark:hover:text-amber-500 hover:border-stone-300 dark:hover:border-stone-700 active:translate-y-0 transition-all">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
           </button>
-          <button id="btn-typography-toggle" title="Typography Options" class="p-2 px-3 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 rounded-xl shadow-sm font-serif font-bold text-xs hover:text-amber-800 dark:hover:text-amber-500 hover:border-stone-300 dark:hover:border-stone-700 transition-all">
+          <button id="btn-typography-toggle" title="Typography Options" class="p-2 px-3 bg-white dark:bg-stone-900 border border-stone-200 dark:border-stone-800 text-stone-600 dark:text-stone-300 rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 font-serif font-bold text-xs hover:text-amber-800 dark:hover:text-amber-500 hover:border-stone-300 dark:hover:border-stone-700 active:translate-y-0 transition-all">
             Aa
           </button>
 
           <!-- Generate 2-Column Printable PDF Button -->
-          <button id="btn-export-pdf" title="Export 2-Column Journal PDF" class="p-2 px-2.5 bg-amber-800 dark:bg-amber-600 text-white rounded-xl shadow-sm font-bold text-xs hover:bg-amber-900 transition-all flex items-center gap-1">
+          <button id="btn-export-pdf" title="Export 2-Column Journal PDF" class="p-2 px-2.5 bg-amber-800 dark:bg-amber-600 text-white rounded-xl shadow-sm hover:shadow-md hover:-translate-y-0.5 hover:bg-amber-900 dark:hover:bg-amber-500 active:translate-y-0 transition-all flex items-center gap-1">
             <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             <span class="text-[10px]">PDF</span>
           </button>
@@ -166,8 +176,8 @@
       <div id="search-panel" class="hidden bg-white/90 dark:bg-stone-900/80 backdrop-blur-md border border-stone-200 dark:border-stone-800/80 rounded-2xl p-4 mb-6 shadow-lg animate-[fadeIn_0.2s_ease]">
         <label class="text-[10px] font-bold uppercase tracking-wider text-stone-400 dark:text-stone-500 mb-2 block">Lookup Reference or Search Keyword</label>
         <div class="flex gap-2">
-          <input type="text" id="bible-search-input" placeholder="Try 'John 3:16' or search keyword like 'Faith'..." class="flex-1 px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all">
-          <button id="btn-bible-search" class="bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-5 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-850 dark:hover:bg-amber-200 transition duration-300 shadow-sm">Search</button>
+          <input type="text" id="bible-search-input" placeholder="Try 'John 3:16' or search keyword like 'Faith'..." class="flex-1 px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner">
+          <button id="btn-bible-search" class="bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-5 py-2.5 rounded-xl text-xs font-bold hover:shadow-md hover:-translate-y-0.5 hover:bg-amber-850 dark:hover:bg-amber-200 active:translate-y-0 transition-all duration-300">Search</button>
         </div>
         <p id="search-error" class="text-xs text-red-500 mt-2 hidden"></p>
 
@@ -183,15 +193,19 @@
         <div class="flex justify-between items-center mb-4">
           <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Text Size</span>
           <div class="flex gap-2 bg-stone-100 dark:bg-stone-800 rounded-xl p-1">
-            <button id="btn-text-dec" class="px-4 py-1 hover:bg-white dark:hover:bg-stone-700 rounded-lg shadow-sm text-sm font-bold transition-all">-</button>
-            <button id="btn-text-inc" class="px-4 py-1 hover:bg-white dark:hover:bg-stone-700 rounded-lg shadow-sm text-sm font-bold transition-all">+</button>
+            <button id="btn-text-dec" class="px-4 py-1 hover:bg-white dark:hover:bg-stone-700 rounded-lg shadow-sm hover:shadow text-sm font-bold transition-all">-</button>
+            <button id="btn-text-inc" class="px-4 py-1 hover:bg-white dark:hover:bg-stone-700 rounded-lg shadow-sm hover:shadow text-sm font-bold transition-all">+</button>
           </div>
         </div>
-        <div class="flex justify-between items-center">
-          <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Font Style</span>
-          <div class="flex gap-2">
-            <button id="btn-font-serif" class="px-4 py-1.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg font-serif text-xs font-bold border border-transparent transition-all">Serif</button>
-            <button id="btn-font-sans" class="px-4 py-1.5 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-lg font-sans text-xs font-bold border border-transparent transition-all">Sans</button>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-stone-400 block mb-2">Font Style</span>
+          <div class="flex flex-wrap gap-2">
+            <!-- Added 3 new fonts -->
+            <button id="btn-font-serif" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl font-serif text-xs font-bold border-2 border-transparent transition-all">Playfair</button>
+            <button id="btn-font-sans" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl font-sans text-xs font-bold border-2 border-transparent transition-all">Jakarta</button>
+            <button id="btn-font-lora" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl text-xs font-bold border-2 border-transparent transition-all" style="font-family: 'Lora', serif;">Lora</button>
+            <button id="btn-font-inter" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl text-xs font-bold border-2 border-transparent transition-all" style="font-family: 'Inter', sans-serif;">Inter</button>
+            <button id="btn-font-mono" class="flex-1 px-4 py-2 bg-stone-100 dark:bg-stone-800 hover:bg-stone-200 dark:hover:bg-stone-700 rounded-xl text-xs font-bold border-2 border-transparent transition-all" style="font-family: 'Fira Code', monospace;">Mono</button>
           </div>
         </div>
       </div>
@@ -212,7 +226,7 @@
 
       <!-- Floating Pen Tools -->
       <div class="fixed bottom-24 right-5 z-40 flex flex-col items-end gap-3 pointer-events-auto">
-        <div id="pen-settings" class="hidden bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl shadow-xl p-4 flex-col items-center gap-4 transition-all w-[180px]">
+        <div id="pen-settings" class="hidden bg-white/90 dark:bg-stone-900/90 backdrop-blur-md border border-stone-200 dark:border-stone-800 rounded-2xl shadow-xl p-4 flex-col items-center gap-4 transition-all w-[210px]">
           
           <!-- Drawing Tools -->
           <div class="flex w-full gap-1 border-b border-stone-100 dark:border-stone-800 pb-3">
@@ -221,20 +235,27 @@
             <button onclick="setDrawingTool('eraser', this)" class="tool-btn flex-1 text-[10px] font-bold py-1.5 rounded-lg text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors">Eraser</button>
           </div>
 
-          <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center w-full mt-1">Thickness</label>
+          <label class="text-[9px] font-bold uppercase tracking-widest text-stone-400 text-center w-full mt-1">Thickness & Color</label>
           <input type="range" id="pen-thickness" min="1" max="15" value="3" class="w-full h-1 bg-stone-200 dark:bg-stone-800 rounded-lg appearance-none cursor-pointer">
-          <div class="flex gap-3 mt-2">
+          
+          <!-- Expanded Colors -->
+          <div class="flex flex-wrap justify-center gap-2 mt-2">
             <button onclick="changePenColor('rgba(253, 224, 71, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-yellow-300 ring-2 ring-offset-2 ring-amber-500 transition-all"></button>
             <button onclick="changePenColor('rgba(248, 113, 113, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-red-400 hover:scale-110 transition-all"></button>
             <button onclick="changePenColor('rgba(96, 165, 250, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-blue-400 hover:scale-110 transition-all"></button>
+            <button onclick="changePenColor('rgba(167, 139, 250, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-purple-400 hover:scale-110 transition-all"></button>
+            <button onclick="changePenColor('rgba(74, 222, 128, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-green-400 hover:scale-110 transition-all"></button>
+            <button onclick="changePenColor('rgba(251, 146, 60, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-orange-400 hover:scale-110 transition-all"></button>
+            <button onclick="changePenColor('rgba(244, 114, 182, 0.7)', this)" class="color-btn w-6 h-6 rounded-full bg-pink-400 hover:scale-110 transition-all"></button>
             <button onclick="changePenColor('rgba(30, 41, 59, 0.85)', this)" class="color-btn w-6 h-6 rounded-full bg-stone-800 dark:bg-stone-100 hover:scale-110 transition-all"></button>
           </div>
+
           <div class="flex w-full gap-2 pt-3 border-t border-stone-100 dark:border-stone-800/80">
             <button id="btn-undo-canvas" class="flex-1 text-[10px] font-bold text-stone-500 hover:text-amber-600 transition-colors uppercase tracking-wider">Undo</button>
             <button id="btn-clear-canvas" class="flex-1 text-[10px] font-bold text-red-500 hover:text-red-700 transition-colors uppercase tracking-wider">Clear</button>
           </div>
         </div>
-        <button id="btn-toggle-pen" class="w-12 h-12 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95">
+        <button id="btn-toggle-pen" class="w-12 h-12 bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 rounded-full shadow-xl hover:shadow-2xl flex items-center justify-center transition-all duration-300 hover:scale-105 active:scale-95">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
         </button>
       </div>
@@ -273,8 +294,8 @@
           </div>
           
           <div class="flex justify-between items-center mt-8 pt-6 border-t border-stone-200/60 dark:border-stone-800/60 pb-4 relative z-30 pointer-events-auto">
-            <button id="prev-btn" class="px-5 py-2.5 bg-stone-200/40 dark:bg-stone-900/40 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl text-xs font-bold tracking-wider uppercase transition-all disabled:opacity-30 disabled:pointer-events-none">← Prev</button>
-            <button id="next-btn" class="px-5 py-2.5 bg-stone-200/40 dark:bg-stone-900/40 hover:bg-stone-200 dark:hover:bg-stone-800 rounded-xl text-xs font-bold tracking-wider uppercase transition-all disabled:opacity-30 disabled:pointer-events-none">Next →</button>
+            <button id="prev-btn" class="px-5 py-2.5 bg-stone-200/40 dark:bg-stone-900/40 hover:bg-stone-200 dark:hover:bg-stone-800 hover:-translate-y-0.5 active:translate-y-0 rounded-xl text-xs font-bold tracking-wider uppercase transition-all shadow-sm hover:shadow-md disabled:opacity-30 disabled:pointer-events-none disabled:shadow-none disabled:-translate-y-0">← Prev</button>
+            <button id="next-btn" class="px-5 py-2.5 bg-stone-200/40 dark:bg-stone-900/40 hover:bg-stone-200 dark:hover:bg-stone-800 hover:-translate-y-0.5 active:translate-y-0 rounded-xl text-xs font-bold tracking-wider uppercase transition-all shadow-sm hover:shadow-md disabled:opacity-30 disabled:pointer-events-none disabled:shadow-none disabled:-translate-y-0">Next →</button>
           </div>
         </div>
       </div>
@@ -286,7 +307,7 @@
       <p class="text-xs text-stone-400 dark:text-stone-500 uppercase tracking-widest font-semibold mb-8">Track your journey through the scriptures.</p>
       
       <div id="plans-home" class="space-y-4">
-        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="openPlan('p30', '30-Day New Testament')">
+        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="openPlan('p30', '30-Day New Testament')">
           <div class="flex justify-between items-center">
             <div>
               <h3 class="font-extrabold text-base tracking-tight text-stone-850 dark:text-stone-100">30-Day New Testament</h3>
@@ -296,7 +317,7 @@
           </div>
         </div>
 
-        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="openPlan('p90', '90-Day Whole Bible')">
+        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="openPlan('p90', '90-Day Whole Bible')">
           <div class="flex justify-between items-center">
             <div>
               <h3 class="font-extrabold text-base tracking-tight text-stone-850 dark:text-stone-100">90-Day Whole Bible</h3>
@@ -306,7 +327,7 @@
           </div>
         </div>
 
-        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 transition-all duration-300 cursor-pointer" onclick="openPlan('p365', '365-Day Whole Bible')">
+        <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-6 shadow-[0_4px_25px_rgba(0,0,0,0.01)] hover:border-amber-500/60 dark:hover:border-amber-500/40 hover:-translate-y-1 hover:shadow-md transition-all duration-300 cursor-pointer" onclick="openPlan('p365', '365-Day Whole Bible')">
           <div class="flex justify-between items-center">
             <div>
               <h3 class="font-extrabold text-base tracking-tight text-stone-850 dark:text-stone-100">365-Day Whole Bible</h3>
@@ -337,7 +358,7 @@
           <h1 class="text-3xl font-bold tracking-tight serif-font">My Devotions</h1>
           <p class="text-xs text-stone-400 dark:text-stone-500 font-semibold uppercase tracking-widest mt-1">Journal & Reflect</p>
         </div>
-        <button id="btn-new-soap" class="bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-850 dark:hover:bg-stone-200 transition-all duration-300 shadow-md">
+        <button id="btn-new-soap" class="bg-stone-900 dark:bg-stone-100 text-white dark:text-stone-900 px-4 py-2.5 rounded-xl text-xs font-bold hover:bg-amber-850 dark:hover:bg-stone-200 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 transition-all duration-300 shadow-md">
           + New SOAP Entry
         </button>
       </header>
@@ -356,28 +377,28 @@
         <div class="space-y-5">
           <div>
             <label class="block text-[9px] font-bold text-stone-400 dark:text-stone-500 uppercase tracking-widest mb-1.5">Date / Title</label>
-            <input type="text" id="soap-title" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner">
+            <input type="text" id="soap-title" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner">
           </div>
           <div>
             <label class="block text-[9px] font-bold text-amber-800 dark:text-amber-500 uppercase tracking-widest mb-1.5">S - Scripture</label>
-            <textarea id="soap-s" rows="2" placeholder="The key verse or passage that spoke to you..." class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
+            <textarea id="soap-s" rows="2" placeholder="The key verse or passage that spoke to you..." class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
           </div>
           <div>
             <label class="block text-[9px] font-bold text-amber-800 dark:text-amber-500 uppercase tracking-widest mb-1.5">O - Observation</label>
-            <textarea id="soap-o" rows="2" placeholder="What details or context did you discover?" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
+            <textarea id="soap-o" rows="2" placeholder="What details or context did you discover?" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
           </div>
           <div>
             <label class="block text-[9px] font-bold text-amber-800 dark:text-amber-500 uppercase tracking-widest mb-1.5">A - Application</label>
-            <textarea id="soap-a" rows="2" placeholder="How does this apply directly to your life today?" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
+            <textarea id="soap-a" rows="2" placeholder="How does this apply directly to your life today?" class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
           </div>
           <div>
             <label class="block text-[9px] font-bold text-amber-800 dark:text-amber-500 uppercase tracking-widest mb-1.5">P - Prayer</label>
-            <textarea id="soap-p" rows="2" placeholder="Write out your conversation with God..." class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
+            <textarea id="soap-p" rows="2" placeholder="Write out your conversation with God..." class="w-full px-4 py-2.5 bg-stone-50 dark:bg-stone-950 border border-stone-200 dark:border-stone-800 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner placeholder-stone-400 dark:placeholder-stone-600"></textarea>
           </div>
         </div>
         <div class="mt-8 flex gap-3">
-          <button id="btn-save-soap" class="flex-1 bg-amber-800 dark:bg-amber-600 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-amber-900 transition shadow-md">Save Entry</button>
-          <button id="btn-cancel-soap" class="flex-1 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 px-5 py-3 rounded-xl text-xs font-bold hover:bg-stone-200 dark:hover:bg-stone-700 transition">Cancel</button>
+          <button id="btn-save-soap" class="flex-1 bg-amber-800 dark:bg-amber-600 text-white px-5 py-3 rounded-xl text-xs font-bold hover:bg-amber-900 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition shadow-md">Save Entry</button>
+          <button id="btn-cancel-soap" class="flex-1 bg-stone-100 dark:bg-stone-800 text-stone-700 dark:text-stone-300 px-5 py-3 rounded-xl text-xs font-bold hover:bg-stone-200 dark:hover:bg-stone-700 hover:shadow-md hover:-translate-y-0.5 active:translate-y-0 transition shadow-sm">Cancel</button>
         </div>
       </div>
     </section>
@@ -422,10 +443,10 @@
   <div id="note-modal" class="hidden fixed inset-0 z-[200] bg-black/60 backdrop-blur-sm flex items-center justify-center p-5 opacity-0 transition-opacity duration-200">
     <div id="note-modal-content" class="bg-white dark:bg-stone-900 rounded-3xl w-full max-w-sm p-6 shadow-2xl transform scale-95 transition-transform duration-200">
       <h3 class="font-bold text-base serif-font mb-4">Verse Reflection</h3>
-      <textarea id="note-textarea" rows="5" placeholder="Scribble down your personal thoughts, notes, or revelations..." class="w-full border border-stone-200 dark:border-stone-800 rounded-2xl p-4 bg-stone-50 dark:bg-stone-950 focus:outline-none focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner"></textarea>
+      <textarea id="note-textarea" rows="5" placeholder="Scribble down your personal thoughts, notes, or revelations..." class="w-full border border-stone-200 dark:border-stone-800 rounded-2xl p-4 bg-stone-50 dark:bg-stone-950 focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-600 dark:focus:border-amber-500 text-sm transition-all shadow-inner"></textarea>
       <div class="flex gap-3 mt-5">
-        <button id="btn-save-note" class="flex-1 bg-amber-800 dark:bg-amber-600 text-white rounded-xl py-3 font-bold text-xs tracking-wider hover:bg-amber-900 transition">Save Note</button>
-        <button id="btn-close-note" class="flex-1 bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 rounded-xl py-3 font-bold text-xs tracking-wider hover:bg-stone-200 dark:hover:bg-stone-700 transition">Cancel</button>
+        <button id="btn-save-note" class="flex-1 bg-amber-800 dark:bg-amber-600 text-white rounded-xl py-3 font-bold text-xs tracking-wider hover:bg-amber-900 hover:-translate-y-0.5 hover:shadow-lg active:translate-y-0 transition shadow-md">Save Note</button>
+        <button id="btn-close-note" class="flex-1 bg-stone-100 dark:bg-stone-800 text-stone-800 dark:text-stone-200 rounded-xl py-3 font-bold text-xs tracking-wider hover:bg-stone-200 dark:hover:bg-stone-700 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 transition shadow-sm">Cancel</button>
       </div>
     </div>
   </div>
@@ -433,27 +454,27 @@
   <!-- FIXED BOTTOM NAVIGATION -->
   <nav class="fixed bottom-0 left-0 right-0 bg-white/70 dark:bg-stone-950/70 backdrop-blur-xl border-t border-stone-200/50 dark:border-stone-900/50 z-50 transition-colors duration-500">
     <div class="max-w-2xl mx-auto px-6 py-3.5 flex justify-between items-center">
-      <button class="nav-btn active flex flex-col items-center gap-1.5 text-amber-850 dark:text-amber-500 transition-all duration-300 transform active:scale-95" data-target="view-home">
+      <button class="nav-btn active flex flex-col items-center gap-1.5 text-amber-850 dark:text-amber-500 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-home">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
         <span class="text-[9px] font-extrabold tracking-wider uppercase">Home</span>
       </button>
 
-      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform active:scale-95" data-target="view-bible">
+      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-bible">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
         <span class="text-[9px] font-extrabold tracking-wider uppercase">Bible</span>
       </button>
 
-      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform active:scale-95" data-target="view-plans">
+      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-plans">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
         <span class="text-[9px] font-extrabold tracking-wider uppercase">Plans</span>
       </button>
 
-      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform active:scale-95" data-target="view-devotion">
+      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-devotion">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg>
         <span class="text-[9px] font-extrabold tracking-wider uppercase">Journal</span>
       </button>
 
-      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform active:scale-95" data-target="view-settings">
+      <button class="nav-btn flex flex-col items-center gap-1.5 text-stone-400 dark:text-stone-500 hover:text-stone-800 dark:hover:text-stone-300 transition-all duration-300 transform hover:-translate-y-1 active:scale-95" data-target="view-settings">
         <svg class="w-5.5 h-5.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.2"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
         <span class="text-[9px] font-extrabold tracking-wider uppercase">Settings</span>
       </button>
@@ -761,19 +782,37 @@
     const typographyPanel = document.getElementById('typography-panel');
     const btnTextInc = document.getElementById('btn-text-inc');
     const btnTextDec = document.getElementById('btn-text-dec');
+    
+    // Font Buttons
     const btnFontSerif = document.getElementById('btn-font-serif');
     const btnFontSans = document.getElementById('btn-font-sans');
+    const btnFontLora = document.getElementById('btn-font-lora');
+    const btnFontInter = document.getElementById('btn-font-inter');
+    const btnFontMono = document.getElementById('btn-font-mono');
 
     function applyTypography() {
       versesBody.style.fontSize = `${currentFontSize}px`;
+      
+      // Reset all buttons
+      [btnFontSerif, btnFontSans, btnFontLora, btnFontInter, btnFontMono].forEach(btn => {
+        if(btn) btn.classList.remove('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
+      });
+
       if (currentFontFamily === 'serif') {
         versesBody.style.fontFamily = "'Playfair Display', serif";
-        btnFontSerif.classList.add('border-amber-500', 'text-amber-700');
-        btnFontSans.classList.remove('border-amber-500', 'text-amber-700');
-      } else {
+        btnFontSerif.classList.add('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
+      } else if (currentFontFamily === 'sans') {
         versesBody.style.fontFamily = "'Plus Jakarta Sans', sans-serif";
-        btnFontSans.classList.add('border-amber-500', 'text-amber-700');
-        btnFontSerif.classList.remove('border-amber-500', 'text-amber-700');
+        btnFontSans.classList.add('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
+      } else if (currentFontFamily === 'lora') {
+        versesBody.style.fontFamily = "'Lora', serif";
+        btnFontLora.classList.add('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
+      } else if (currentFontFamily === 'inter') {
+        versesBody.style.fontFamily = "'Inter', sans-serif";
+        btnFontInter.classList.add('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
+      } else if (currentFontFamily === 'mono') {
+        versesBody.style.fontFamily = "'Fira Code', monospace";
+        btnFontMono.classList.add('border-amber-500', 'text-amber-700', 'dark:text-amber-400');
       }
       saveReadState();
       setTimeout(resizeCanvas, 100);
@@ -806,7 +845,7 @@
       const totalChapters = bibleBooks[currentBookIdx].c;
       for (let i = 1; i <= totalChapters; i++) {
         const option = document.createElement('option');
-        option.value = i; option.textContent = i;
+        option.value = i; option.textContent = 'Chapter ' + i;
         if (i === currentChapter) option.selected = true;
         chapterSelect.appendChild(option);
       }
@@ -914,8 +953,12 @@
     
     btnTextInc.addEventListener('click', () => { if(currentFontSize < 32) { currentFontSize += 2; applyTypography(); }});
     btnTextDec.addEventListener('click', () => { if(currentFontSize > 12) { currentFontSize -= 2; applyTypography(); }});
+    
     btnFontSerif.addEventListener('click', () => { currentFontFamily = 'serif'; applyTypography(); });
     btnFontSans.addEventListener('click', () => { currentFontFamily = 'sans'; applyTypography(); });
+    btnFontLora.addEventListener('click', () => { currentFontFamily = 'lora'; applyTypography(); });
+    btnFontInter.addEventListener('click', () => { currentFontFamily = 'inter'; applyTypography(); });
+    btnFontMono.addEventListener('click', () => { currentFontFamily = 'mono'; applyTypography(); });
 
     // --- FEATURE 1: OFFLINE BIBLE VERSION DOWNLOAD MANAGER IN SETTINGS ---
     function renderOfflineVersionsSettings() {
@@ -933,7 +976,7 @@
               </span>
             </div>
             ${isDownloaded ? `
-              <button onclick="removeOfflineVersion('${version}')" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-950/40 px-3 py-1.5 rounded-lg transition-colors">
+              <button onclick="removeOfflineVersion('${version}')" class="text-[10px] font-bold text-red-500 hover:text-red-700 bg-red-50 dark:bg-red-950/40 hover:bg-red-100 dark:hover:bg-red-900/40 px-3 py-1.5 rounded-lg transition-colors">
                 Delete
               </button>
             ` : `
@@ -1313,7 +1356,7 @@
                 <p class="text-sm font-bold text-stone-850 dark:text-stone-200 mt-0.5">${textRef}</p>
               </div>
             </div>
-            <button onclick="readPlanDay(${day[0].bIdx}, ${day[0].c})" class="text-[10px] font-bold bg-stone-100 dark:bg-stone-800 px-3.5 py-2 rounded-xl hover:bg-amber-800 hover:text-white dark:hover:bg-amber-600 transition-all">Read</button>
+            <button onclick="readPlanDay(${day[0].bIdx}, ${day[0].c})" class="text-[10px] font-bold bg-stone-100 dark:bg-stone-800 px-3.5 py-2 rounded-xl hover:bg-amber-800 hover:text-white hover:-translate-y-0.5 active:translate-y-0 hover:shadow-md dark:hover:bg-amber-600 transition-all">Read</button>
           </div>
         `;
       }).join('');
@@ -1625,7 +1668,7 @@
       } else {
         soapEmpty.classList.add('hidden');
         soapList.innerHTML = soaps.map((s, idx) => `
-          <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-5 shadow-[0_2px_15px_rgba(0,0,0,0.01)] relative">
+          <div class="bg-white/60 dark:bg-stone-900/40 backdrop-blur-md border border-stone-200/50 dark:border-stone-800/40 rounded-2xl p-5 shadow-[0_2px_15px_rgba(0,0,0,0.01)] hover:shadow-md transition-shadow duration-300 relative">
             <button onclick="deleteSoap(${idx})" class="absolute top-4 right-4 text-stone-400 hover:text-red-500 transition-colors">
               <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
             </button>
